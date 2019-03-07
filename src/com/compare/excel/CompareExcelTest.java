@@ -12,30 +12,26 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 /**
- * @author pramati
+ * @author akhileshP
  *
  */
 public class CompareExcelTest {
 
 	public static void main(String[] args) {
-		try {
-			FileInputStream excellFile1 = new FileInputStream(new File("FILE_PATH1"));
-			FileInputStream excellFile2 = new FileInputStream(new File("FILE_PATH2"));
+		try (FileInputStream excellFile1 = new FileInputStream(new File("FILE_PATH1"));
+				FileInputStream excellFile2 = new FileInputStream(new File("FILE_PATH2"));
 
-			HSSFWorkbook workbook1 = new HSSFWorkbook(excellFile1);
-			HSSFWorkbook workbook2 = new HSSFWorkbook(excellFile2);
+				HSSFWorkbook workbook1 = new HSSFWorkbook(excellFile1);
+				HSSFWorkbook workbook2 = new HSSFWorkbook(excellFile2);) {
 
 			HSSFSheet sheet1 = workbook1.getSheetAt(0);
 			HSSFSheet sheet2 = workbook2.getSheetAt(0);
 
-			if (compareTwoSheets(sheet1, sheet2)) {
+			if (compareSheets(sheet1, sheet2)) {
 				System.out.println("\n\nThe two excel sheets are Equal");
 			} else {
 				System.out.println("\n\nThe two excel sheets are Not Equal");
 			}
-
-			excellFile1.close();
-			excellFile2.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -43,8 +39,7 @@ public class CompareExcelTest {
 
 	}
 
-	// Compare Two Sheets
-	public static boolean compareTwoSheets(HSSFSheet sheet1, HSSFSheet sheet2) {
+	public static boolean compareSheets(HSSFSheet sheet1, HSSFSheet sheet2) {
 		int firstRow1 = sheet1.getFirstRowNum();
 		int lastRow1 = sheet1.getLastRowNum();
 		boolean equalSheets = true;
@@ -52,7 +47,7 @@ public class CompareExcelTest {
 			System.out.println("\n\nComparing Row " + i);
 			HSSFRow row1 = sheet1.getRow(i);
 			HSSFRow row2 = sheet2.getRow(i);
-			if (!compareTwoRows(row1, row2)) {
+			if (!compareRows(row1, row2)) {
 				equalSheets = false;
 				System.out.println("Row " + i + " - Not Equal");
 			}
@@ -60,8 +55,7 @@ public class CompareExcelTest {
 		return equalSheets;
 	}
 
-	// Compare Two Rows
-	public static boolean compareTwoRows(HSSFRow row1, HSSFRow row2) {
+	public static boolean compareRows(HSSFRow row1, HSSFRow row2) {
 		if ((row1 == null) && (row2 == null)) {
 			return true;
 		} else if ((row1 == null) || (row2 == null)) {
@@ -72,11 +66,10 @@ public class CompareExcelTest {
 		int lastCell1 = row1.getLastCellNum();
 		boolean equalRows = true;
 
-		// Compare all cells in a row
 		for (int i = firstCell1; i <= lastCell1; i++) {
 			HSSFCell cell1 = row1.getCell(i);
 			HSSFCell cell2 = row2.getCell(i);
-			if (!compareTwoCells(cell1, cell2)) {
+			if (!compareCells(cell1, cell2)) {
 				equalRows = false;
 				System.err.println("       Cell " + i + " - Not Equal" + "; Value of Cell " + i + " is \"" + cell1
 						+ "\" - Value of Cell " + i + " is \"" + cell2 + "\"");
@@ -85,8 +78,7 @@ public class CompareExcelTest {
 		return equalRows;
 	}
 
-	// Compare Two Cells
-	public static boolean compareTwoCells(HSSFCell cell1, HSSFCell cell2) {
+	public static boolean compareCells(HSSFCell cell1, HSSFCell cell2) {
 		if ((cell1 == null) && (cell2 == null)) {
 			return true;
 		} else if ((cell1 == null) || (cell2 == null)) {
@@ -98,7 +90,6 @@ public class CompareExcelTest {
 		int type2 = cell2.getCellType();
 		if (type1 == type2) {
 			if (cell1.getCellStyle().equals(cell2.getCellStyle())) {
-				// Compare cells based on its type
 				switch (cell1.getCellType()) {
 				case HSSFCell.CELL_TYPE_FORMULA:
 					if (cell1.getCellFormula().equals(cell2.getCellFormula())) {
