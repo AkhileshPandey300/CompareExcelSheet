@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="/home/pramati/Documents/Jars/POI/commons-codec-1.9.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/pramati/Documents/Jars/POI/poi-3.11.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/pramati/Documents/Jars/POI/poi-ooxml-3.11.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/pramati/Documents/Jars/POI/poi-ooxml-schemas-3.11.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/pramati/Documents/Jars/POI/stax-api-1.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/pramati/Documents/Jars/POI/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

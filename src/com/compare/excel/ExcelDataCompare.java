@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.compare.excel;
 
 import java.io.File;
